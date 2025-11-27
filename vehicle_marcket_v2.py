@@ -51,7 +51,7 @@ app = FastAPI()
 
 @app.get("/car-ads/{car_model}", response_model=CarResponse)
 def car_analysis(car_model: str):
-    car_model = "axio"
+
 
     urls = [
         f"https://ikman.lk/en/ads?query={car_model}",

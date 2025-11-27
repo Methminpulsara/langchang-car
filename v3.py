@@ -8,13 +8,16 @@ from fastapi import FastAPI
 
 load_dotenv()
 
-OPENROUTER_KEY = os.getenv("OPENROUTER_KEY")
-OPENROUTER_URL = os.getenv("OPENROUTER_URL")
+
+
 
 summerlize_llm = ChatOllama(
-
-    model="llama-3.2"
+    model="llama3.2:3b"
 )
+
+anaylize_llm = ChatOllama(
+    model="llama3.2:3b"
+).with_structured_output(CarResponse)
 
 summarizer_promt = ChatPromptTemplate.from_template(
     """Extract car price in rupees, manufacture year, and mileage for the given car model:
@@ -37,9 +40,6 @@ Here is a summarized list of car ads for {car_model}.
 Highlight key insight, provide a 2-3 summary , also provide best average price to buy
 """)
 
-anaylize_llm = ChatOllama(
-    model="llama-3.2"
-).with_structured_output(CarResponse)
 
 analysis_chain = response_pormt | anaylize_llm
 
